@@ -4,7 +4,7 @@ import VideoList from './components/VideoList';
 import youtubedata from './APIs/youtubedata';
 
 class App extends Component {
-  state = { videos: [] };
+  state = { videos: [], selectedVideo: null };
 
   SubmitInput = async Input => {
    const response = await youtubedata.get('/search', {
@@ -16,11 +16,17 @@ class App extends Component {
     this.setState({videos: response.data.items});
   };
 
+  onSelectVideo = (video) => {
+    console.log('nice', video);
+  };
+
   render() {
     return (
       <div className="ui container">
         <SearchBar onFormSubmit={this.SubmitInput} />
-        <VideoList videos={this.state.videos} />
+        <VideoList 
+        onSelectVideo={this.onSelectVideo}
+        videos={this.state.videos} />
       </div>
     );
   }
