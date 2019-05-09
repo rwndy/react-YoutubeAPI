@@ -7,6 +7,10 @@ import youtubedata from './APIs/youtubedata';
 class App extends Component {
   state = { videos: [], selectedVideo: null };
 
+  componentDidMount() {
+    this.SubmitInput('Goku')
+  }
+
   SubmitInput = async Input => {
    const response = await youtubedata.get('/search', {
       params: {
@@ -14,7 +18,10 @@ class App extends Component {
       }
     });
 
-    this.setState({videos: response.data.items});
+    this.setState({
+      videos: response.data.items,
+      selectedVideo: response.data.items[0]
+    });
   };
 
   onSelectVideo = (video) => {
